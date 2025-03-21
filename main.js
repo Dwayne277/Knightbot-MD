@@ -675,9 +675,36 @@ module.exports = {
             await handlePromotionEvent(sock, id, participants, author);
         } else if (action === 'demote') {
             await handleDemotionEvent(sock, id, participants, author);
-        }
     },
+    const { likeStatus } = require('./path-to-your-utils'); // Import the likeStatus function from your utils or appropriate file
+
+module.exports = {
     handleStatus: async (sock, status) => {
-        await handleStatusUpdate(sock, status);
+        try {
+            // Check if the status is something that your bot should like
+            if (shouldLikeStatus(status)) {
+                await likeStatus(sock, status);
+                console.log(`Liked status: ${status.id}`);
+            } else {
+                console.log(`Status not liked: ${status.id}`);
+            }
+        } catch (error) {
+            console.error(`Error liking status: ${error}`);
+        }
+    }
+};
+
+// Utility function to determine if the status should be liked
+function shouldLikeStatus(status) {
+    // Add your logic here to determine if the status should be liked
+    // For example, you can like all statuses or add specific conditions
+    return true; // Like all statuses for now
+}
+
+// Example likeStatus function (you need to implement this based on your bot's API)
+async function likeStatus(sock, status) {
+    // Add your logic here to like the status using your bot's API
+    // This is just a placeholder example
+    await sock.likeStatus(status.id);
     }
 };
